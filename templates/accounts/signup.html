@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+
+    Farmer Web- Signup Portal
+
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+			<div class="col-md-4">
+				<form method="POST">
+					{% csrf_token %}
+					{{ form.as_p }}
+
+					<input type="submit" value='Signup' class="btn btn-outline-primary">
+				</form>
+			</div>
+
+			<div class="col-md-7">
+				<h4>Be Ready To Become A Part Of Farmers web</h4><hr>
+				<p class="description">
+					We are the Farmer Web!
+
+					Well, Hello and welcome to the Farmers web! here thousands of farmers chat in their local language and discuss whatever they want
+					this is a virtual heaven for farmers who like to be social and want a size that is easy to operate with and co-orperate with!
+					This is Me,  The Developer and Maintaner/Admin of this site if at any time you want to co-orperate or report
+					any bugs about this site please report it here- <a href="https://vaishnavijahav@gmail.com">vaishnavijahav@gmail.com</a>. Hope so will help
+					to develope a more better and strong community.
+				</p>
+			</div>
+		</div>
+{% endblock content %}
