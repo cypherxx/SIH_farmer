@@ -1,14 +1,17 @@
+from email import message
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import CreateView, ListView
 from .forms import ChatForm
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Chat, language
 from django.utils import timezone
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 import time
-from selenium.webdriver.common.action_chains import ActionChains
-#chromedriver_path="C://old_data/chromedriver/chromedriver.exe"
+import json
+
+
+
 class ChatCreateView(LoginRequiredMixin, CreateView):
     login_url = 'accounts:login'
     form_class = ChatForm
@@ -19,7 +22,6 @@ class ChatCreateView(LoginRequiredMixin, CreateView):
         self.object.user = self.request.user
         self.object.save()
         return super().form_valid(form)
-
 
 class ChatListView(LoginRequiredMixin, ListView):
     model = Chat
@@ -37,3 +39,13 @@ class ChatListView(LoginRequiredMixin, ListView):
         return chats
             
 
+def get_chats(request):
+        chats=list(Chat.objects.filter(posted_at__lte=timezone.now()).order_by('posted_at').values())
+        return JsonResponse(chats,safe=False)
+
+def add_chats(request):
+        chat=json.loads(request.data)
+        obj=Chat(user=chat['user'],message=chat['message'],posted_at=chat['posted_at'])
+        obj.save()
+        chats=list(Chat.objects.filter(posted_at__lte=timezone.now()).order_by('posted_at').values())
+        return JsonResponse(chats,safe=False)

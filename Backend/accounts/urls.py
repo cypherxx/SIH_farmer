@@ -7,5 +7,6 @@ urlpatterns = [
 		name='login'),
 	re_path(r'^logout/$', auth_views.LogoutView.as_view(), name='logout'),
 	re_path(r'^signup/$', views.Signup.as_view(), name='signup'),
+	re_path(r'^all_users/$', views.all_users, name='all_users')
 ]
 
