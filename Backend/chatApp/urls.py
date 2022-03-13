@@ -27,4 +27,5 @@ urlpatterns = [
     path('', base_views.HomePage.as_view(), name='home'),
     path('accounts/', include(accounts_urls)),
     path('chat/', include(chat_urls)),
+    path('ml_modules/',include('ml_module.urls'))
 ]
