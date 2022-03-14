@@ -2,10 +2,13 @@ import React from "react";
 
 //?importing Components--------->
 import Base from "../components/Base";
+import CreatePost from "../components/CreatePost";
 function Dashboard() {
 	return (
 		<div>
-			<Base>Hello</Base>
+			<Base>
+				<CreatePost />
+			</Base>
 		</div>
 	);
 }
