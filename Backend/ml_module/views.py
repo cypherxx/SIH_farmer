@@ -11,7 +11,7 @@ import json
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import GridSearchCV
-
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def crop_recommend(Nitrogen,Phosphorous,Potassium,temp,humidity,ph_level,rainfall):
     df = pd.read_csv('C://Projects//SIH_farmer//Backend//ml_module//crop_recommendation.csv')
@@ -33,6 +33,7 @@ def crop_recommendations(request):
     ans = crop_recommend(Nitrogen,Phosphorous,Potassium,temp,humidity,ph_level,rainfall)
     # ans = crop_recommend(83, 45, 60, 28, 70.3, 7.0, 150.9)
     return JsonResponse({"predicted_value":str(ans)})
+
 
 def fertilizer_recommend(Temparature,Humidity,Moisture,Soil_Type,Crop_Type,Nitrogen,Potassium,Phosphorous):
     df = pd.read_csv('C://Projects//SIH_farmer//Backend//ml_module//Fertilizer_Prediction.csv')
@@ -64,7 +65,7 @@ def fertilizer_recommend(Temparature,Humidity,Moisture,Soil_Type,Crop_Type,Nitro
     elif ans[0] ==1:
         return "14-35-14"
     elif ans[0] == 2:
-        return "17-17-17	"
+        return "17-17-17"
     elif ans[0] == 3:
         return "20-20"
     elif ans[0] == 4:
@@ -74,6 +75,7 @@ def fertilizer_recommend(Temparature,Humidity,Moisture,Soil_Type,Crop_Type,Nitro
     else:
         return "Urea"
 
+@csrf_exempt
 def fertilizer_recommendations(request):
     Temparature = request.POST['temp']
     Humidity = request.POST['humidity']
