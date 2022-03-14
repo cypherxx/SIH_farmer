@@ -44,7 +44,7 @@ def get_chats(request):
         return JsonResponse(chats,safe=False)
 
 def add_chats(request):
-        chat=json.loads(request.data)
+        chat=json.loads(request.body)
         obj=Chat(user=chat['user'],message=chat['message'],posted_at=chat['posted_at'])
         obj.save()
         chats=list(Chat.objects.filter(posted_at__lte=timezone.now()).order_by('posted_at').values())

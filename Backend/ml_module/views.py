@@ -23,13 +23,14 @@ def crop_recommend(Nitrogen,Phosphorous,Potassium,temp,humidity,ph_level,rainfal
     return XB.predict(np.array([[Nitrogen,Phosphorous,Potassium,temp,humidity,ph_level,rainfall]]))
 
 def crop_recommendations(request):
-    Nitrogen = request.POST['nitrogen']
-    Phosphorous = request.POST['Phosphorous']
-    Potassium = request.POST['Potassium']
-    temp = request.POST['temp']
-    humidity = request.POST['humidity']
-    ph_level = request.POST['ph']
-    rainfall = request.POST['rainfall']
+    data=json.loads(request.body)
+    Nitrogen = data['nitrogen']
+    Phosphorous = data['Phosphorous']
+    Potassium = data['Potassium']
+    temp = data['temp']
+    humidity = data['humidity']
+    ph_level = data['ph']
+    rainfall = data['rainfall']
     ans = crop_recommend(Nitrogen,Phosphorous,Potassium,temp,humidity,ph_level,rainfall)
     # ans = crop_recommend(83, 45, 60, 28, 70.3, 7.0, 150.9)
     return JsonResponse({"predicted_value":str(ans)})
@@ -77,14 +78,15 @@ def fertilizer_recommend(Temparature,Humidity,Moisture,Soil_Type,Crop_Type,Nitro
 
 @csrf_exempt
 def fertilizer_recommendations(request):
-    Temparature = request.POST['temp']
-    Humidity = request.POST['humidity']
-    Moisture = request.POST['moisture']
-    Soil_Type = request.POST['soil_type']
-    Crop_Type = request.POST['crop_type']
-    Nitrogen = request.POST['nitrogen']
-    Potassium = request.POST['potassium']
-    Phosphorous = request.POST['phosphorous']
+    data=json.loads(request.body)
+    Temparature = data['temp']
+    Humidity = data['humidity']
+    Moisture = data['moisture']
+    Soil_Type = data['soil_type']
+    Crop_Type = data['crop_type']
+    Nitrogen = data['nitrogen']
+    Potassium = data['potassium']
+    Phosphorous = data['phosphorous']
     ans = fertilizer_recommend(Temparature,Humidity,Moisture,Soil_Type,Crop_Type,Nitrogen,Potassium,Phosphorous)
     # ans = fertilizer_recommend(34,65,62	,2,	1,	7,	9,	30)
     return JsonResponse({"predicted_value":ans})
